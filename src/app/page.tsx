@@ -33,6 +33,140 @@ interface Lead {
   updatedAt?: string
 }
 
+// Sample data for demonstration
+const sampleLeads: Lead[] = [
+  {
+    _id: '1',
+    name: 'Rajesh Kumar',
+    email: 'rajesh.kumar@email.com',
+    phone: '+91-9876543210',
+    service: 'Car Rental',
+    vehicle: 'Toyota Camry',
+    city: 'Mumbai',
+    source: 'website',
+    campaign: 'Summer Deal 2024',
+    status: 'new',
+    createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(), // 2 hours ago
+  },
+  {
+    _id: '2',
+    name: 'Priya Sharma',
+    email: 'priya.sharma@email.com',
+    phone: '+91-9876543211',
+    service: 'Bike Rental',
+    vehicle: 'Honda Activa',
+    city: 'Delhi',
+    source: 'meta',
+    campaign: 'Facebook Ads',
+    status: 'contacted',
+    createdAt: new Date(Date.now() - 4 * 60 * 60 * 1000).toISOString(), // 4 hours ago
+  },
+  {
+    _id: '3',
+    name: 'Amit Singh',
+    email: 'amit.singh@email.com',
+    phone: '+91-9876543212',
+    service: 'Car Rental',
+    vehicle: 'Mahindra Scorpio',
+    city: 'Bangalore',
+    source: 'google',
+    campaign: 'Google Search',
+    status: 'qualified',
+    createdAt: new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString(), // 6 hours ago
+  },
+  {
+    _id: '4',
+    name: 'Sneha Patel',
+    email: 'sneha.patel@email.com',
+    phone: '+91-9876543213',
+    service: 'Bike Rental',
+    vehicle: 'Royal Enfield',
+    city: 'Ahmedabad',
+    source: 'website',
+    campaign: 'Referral Program',
+    status: 'converted',
+    createdAt: new Date(Date.now() - 8 * 60 * 60 * 1000).toISOString(), // 8 hours ago
+  },
+  {
+    _id: '5',
+    name: 'Vikram Joshi',
+    email: 'vikram.joshi@email.com',
+    phone: '+91-9876543214',
+    service: 'Car Rental',
+    vehicle: 'Hyundai Creta',
+    city: 'Pune',
+    source: 'meta',
+    campaign: 'Instagram Ads',
+    status: 'new',
+    createdAt: new Date(Date.now() - 10 * 60 * 60 * 1000).toISOString(), // 10 hours ago
+  },
+  {
+    _id: '6',
+    name: 'Kavita Reddy',
+    email: 'kavita.reddy@email.com',
+    phone: '+91-9876543215',
+    service: 'Bike Rental',
+    vehicle: 'Bajaj Pulsar',
+    city: 'Hyderabad',
+    source: 'google',
+    campaign: 'Google Display',
+    status: 'contacted',
+    createdAt: new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString(), // 12 hours ago
+  },
+  {
+    _id: '7',
+    name: 'Rohit Gupta',
+    email: 'rohit.gupta@email.com',
+    phone: '+91-9876543216',
+    service: 'Car Rental',
+    vehicle: 'Maruti Suzuki Swift',
+    city: 'Chennai',
+    source: 'website',
+    campaign: 'Direct Visit',
+    status: 'qualified',
+    createdAt: new Date(Date.now() - 14 * 60 * 60 * 1000).toISOString(), // 14 hours ago
+  },
+  {
+    _id: '8',
+    name: 'Meera Iyer',
+    email: 'meera.iyer@email.com',
+    phone: '+91-9876543217',
+    service: 'Bike Rental',
+    vehicle: 'TVS Jupiter',
+    city: 'Kolkata',
+    source: 'meta',
+    campaign: 'WhatsApp Campaign',
+    status: 'converted',
+    createdAt: new Date(Date.now() - 16 * 60 * 60 * 1000).toISOString(), // 16 hours ago
+  },
+  {
+    _id: '9',
+    name: 'Suresh Nair',
+    email: 'suresh.nair@email.com',
+    phone: '+91-9876543218',
+    service: 'Car Rental',
+    vehicle: 'Tata Nexon',
+    city: 'Kochi',
+    source: 'google',
+    campaign: 'YouTube Ads',
+    status: 'new',
+    createdAt: new Date(Date.now() - 18 * 60 * 60 * 1000).toISOString(), // 18 hours ago
+  },
+  {
+    _id: '10',
+    name: 'Anjali Mehta',
+    email: 'anjali.mehta@email.com',
+    phone: '+91-9876543219',
+    service: 'Bike Rental',
+    vehicle: 'Hero Splendor',
+    city: 'Jaipur',
+    source: 'website',
+    campaign: 'Email Newsletter',
+    status: 'contacted',
+    createdAt: new Date(Date.now() - 20 * 60 * 60 * 1000).toISOString(), // 20 hours ago
+  }
+]
+
 export default function Dashboard() {
   const [leads, setLeads] = useState<Lead[]>([])
   const [filteredLeads, setFilteredLeads] = useState<Lead[]>([])
@@ -101,6 +235,36 @@ export default function Dashboard() {
       setTotalPages(response.data.data?.pagination?.totalPages || response.data.totalPages || 1)
     } catch (error) {
       console.error('Error fetching leads:', error)
+      // Use sample data when API is not available
+      console.log('Using sample data for demonstration')
+
+      // Apply filters to sample data
+      let filteredSampleData = sampleLeads
+
+      if (sourceFilter && sourceFilter !== 'all') {
+        filteredSampleData = filteredSampleData.filter(lead => lead.source === sourceFilter)
+      }
+
+      if (statusFilter && statusFilter !== 'all') {
+        filteredSampleData = filteredSampleData.filter(lead => lead.status === statusFilter)
+      }
+
+      // Pagination
+      const startIndex = (currentPage - 1) * 10
+      const endIndex = startIndex + 10
+      const paginatedData = filteredSampleData.slice(startIndex, endIndex)
+
+      // Track new leads (created in last 5 minutes)
+      const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000)
+      const newlyAddedIds = new Set<string>(
+        sampleLeads
+          .filter((lead: Lead) => new Date(lead.createdAt) > fiveMinutesAgo)
+          .map((lead: Lead) => lead._id)
+      )
+      setNewLeadIds(newlyAddedIds)
+
+      setLeads(paginatedData)
+      setTotalPages(Math.ceil(filteredSampleData.length / 10))
     }
   }
 
